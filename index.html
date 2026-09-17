@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Medha Bhattacharya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root{
+    --bg: #F3F4F8;
+    --bg-alt: #E9EBF3;
+    --ink: #151829;
+    --muted: #5D6278;
+    --line: #D9DCE8;
+    --accent: #3046D1;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #E3E7FB;
+    --card: #FFFFFF;
+    --spark: #E2466E;
+    --spark-soft: #FAD6E0;
+    --spark-ink: #A3183F;
+    --glow: #DCE2FB;
+    --shadow: rgba(48,70,209,.35);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #0E1020;
+      --bg-alt: #151830;
+      --ink: #ECEEF8;
+      --muted: #9CA1BD;
+      --line: #262A45;
+      --accent: #8FA0FF;
+      --accent-ink: #0E1020;
+      --accent-soft: #1D2345;
+      --card: #141731;
+      --spark: #FF7D9E;
+      --spark-soft: #4A1E2E;
+      --spark-ink: #FFB3C6;
+      --glow: #1B2150;
+      --shadow: rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #0E1020;
+    --bg-alt: #151830;
+    --ink: #ECEEF8;
+    --muted: #9CA1BD;
+    --line: #262A45;
+    --accent: #8FA0FF;
+    --accent-ink: #0E1020;
+    --accent-soft: #1D2345;
+    --card: #141731;
+    --spark: #FF7D9E;
+    --spark-soft: #4A1E2E;
+    --spark-ink: #FFB3C6;
+    --glow: #1B2150;
+    --shadow: rgba(0,0,0,.8);
+  }
+
+  * { -webkit-font-smoothing: antialiased; }
+  html { scroll-behavior: smooth; }
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-size: 16px;
+    transition: background .2s ease, color .2s ease;
+  }
+  /* ---------- Pages ---------- */
+  main > section.page-sub{ padding-top: 8.5rem; min-height: calc(100vh - 5.5rem); }
+  .page:not([hidden]){ animation: pagein .45s ease both; }
+  @keyframes pagein{ from{ opacity:.4; transform: translateY(6px); } to{ opacity:1; transform:none; } }
+  .nav-link.active{ color: var(--ink); font-weight: 600; }
+  .nav-link.active::after{ content:""; display:block; height:2px; margin-top:3px; border-radius:2px; background: var(--spark); }
+  .site-nav{ display:flex; align-items:center; gap:1.75rem; font-size:.875rem; }
+  .menu-btn{ display:none; align-items:center; gap:.5rem; font-size:.875rem; padding:.45rem .9rem; border-radius:999px;
+    border:1px solid var(--line); color: var(--ink); background: var(--card); cursor:pointer; }
+  .menu-btn .bars{ width:14px; height:10px; position:relative; }
+  .menu-btn .bars::before, .menu-btn .bars::after{ content:""; position:absolute; left:0; right:0; height:2px; border-radius:2px; background: currentColor; transition: transform .2s ease, top .2s ease; }
+  .menu-btn .bars::before{ top:1px; } .menu-btn .bars::after{ top:7px; }
+  .menu-btn[aria-expanded="true"] .bars::before{ top:4px; transform: rotate(45deg); }
+  .menu-btn[aria-expanded="true"] .bars::after{ top:4px; transform: rotate(-45deg); }
+  @media (max-width: 899px){
+    .menu-btn{ display:inline-flex; }
+    .site-nav{ display:none; position:absolute; top:100%; left:0; right:0; flex-direction:column; align-items:stretch; gap:0;
+      padding:.5rem 1.25rem 1rem; background: var(--bg); border-bottom:1px solid var(--line); box-shadow: 0 18px 30px -24px var(--shadow); }
+    .site-nav.open{ display:flex; }
+    .site-nav .nav-link{ padding:.8rem 0; font-size:1rem; border-bottom:1px solid var(--line); }
+    .site-nav .nav-link:last-child{ border-bottom:0; }
+    .site-nav .nav-link.active::after{ display:none; }
+    .site-nav .nav-link.active{ color: var(--accent); }
+  }
+
+  .explore-grid{ display:grid; gap:1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); }
+  .explore-card{ position:relative; display:flex; flex-direction:column; gap:.4rem; padding:1.5rem 1.5rem 1.75rem;
+    border:1px solid var(--line); border-radius:1.25rem; background: var(--card); color: var(--ink);
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+  .explore-card:hover{ transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 18px 36px -22px var(--shadow); }
+  .explore-kicker{ font-size:.6875rem; letter-spacing:.12em; text-transform:uppercase; color: var(--muted); font-weight:600; }
+  .explore-title{ font-size:1.75rem; line-height:1.15; }
+  .explore-blurb{ font-size:.9375rem; color: var(--muted); line-height:1.55; padding-right:2rem; }
+  .explore-arrow{ position:absolute; right:1.4rem; bottom:1.4rem; font-size:1.25rem; color: var(--spark); transition: transform .2s ease; }
+  .explore-card:hover .explore-arrow{ transform: translateX(4px); }
+  .explore-card-accent{ background: var(--accent); border-color: var(--accent); }
+  .explore-card-accent, .explore-card-accent .explore-kicker, .explore-card-accent .explore-blurb{ color: var(--accent-ink); }
+
+  .page-next{ display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap;
+    margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--line); }
+  .page-next a{ display:inline-flex; flex-direction:column; gap:.15rem; }
+  .page-next small{ font-size:.75rem; letter-spacing:.1em; text-transform:uppercase; color: var(--muted); }
+  .page-next span{ font-family:'Fraunces', ui-serif, Georgia, serif; font-size:1.375rem; }
+  .page-next a:hover span{ color: var(--accent); }
+  .page-next .next{ text-align:right; margin-left:auto; align-items:flex-end; }
+  h1, h2, h3{ text-wrap: balance; }
+  .font-display{ font-family: 'Fraunces', ui-serif, Georgia, serif; }
+  .text-muted{ color: var(--muted); }
+  .border-line{ border-color: var(--line); }
+  .bg-alt{ background: var(--bg-alt); }
+  .bg-card{ background: var(--card); }
+  .accent{ color: var(--accent); }
+  .tabular{ font-variant-numeric: tabular-nums; }
+
+  .site-header{
+    padding-top: env(safe-area-inset-top, 0px);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+  }
+
+  .hero-name{
+    font-size: clamp(2.75rem, 10vw, 7rem);
+    line-height: .95;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+  }
+  .hero-name em{ font-style: italic; color: var(--accent); }
+  .eyebrow{ letter-spacing: .14em; text-transform: uppercase; font-size: .75rem; }
+
+  .btn-primary{
+    background: var(--accent);
+    color: var(--accent-ink);
+    transition: opacity .15s ease;
+  }
+  .btn-primary:hover{ opacity: .88; }
+  .btn-secondary{
+    border: 1px solid var(--line);
+    color: var(--ink);
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .btn-secondary:hover{ border-color: var(--accent); background: var(--accent-soft); }
+
+  .nav-link{ color: var(--muted); }
+  .nav-link:hover{ color: var(--ink); }
+
+  .timeline-rail{ background: var(--line); }
+  .timeline-dot{ background: var(--card); border: 2px solid var(--accent); }
+
+  .chip{
+    border: 1px solid var(--line);
+    color: var(--ink);
+    background: var(--card);
+  }
+
+  input:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .field{
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .field::placeholder{ color: var(--muted); }
+  .field:focus{ border-color: var(--accent); outline: none; }
+
+  /* Hero entrance: starts visible-ish and settles; never parked at opacity 0. */
+  @keyframes settle { from { opacity: .35; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .settle{ animation: settle .7s ease both; }
+  .settle-2{ animation-delay: .08s; }
+  .settle-3{ animation-delay: .16s; }
+
+  /* ---------- Eye-catching additions ---------- */
+  .hero{ background:
+      radial-gradient(60% 70% at 85% 30%, var(--glow) 0%, transparent 70%),
+      var(--bg); }
+  .hero-canvas{
+    position:absolute; inset:0; width:100%; height:100%;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.25) 35%, #000 70%);
+            mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.25) 35%, #000 70%);
+  }
+  .hero-name{ font-size: clamp(3rem, 12vw, 9rem); }
+  .hero-name em{
+    color: var(--accent);
+    padding-right: .08em;
+  }
+  .mark{
+    background: linear-gradient(transparent 62%, var(--spark-soft) 62%);
+    padding: 0 .1em;
+  }
+  .now-pill{
+    display:inline-flex; align-items:center; gap:.6rem;
+    font-size:.8125rem; padding:.45rem .9rem .45rem .7rem; border-radius:999px;
+    border:1px solid var(--line); background: var(--card); color: var(--ink);
+  }
+  .pulse{ width:.5rem; height:.5rem; border-radius:50%; background: var(--spark); position:relative; flex:none; }
+  .pulse::after{ content:""; position:absolute; inset:0; border-radius:50%; background: var(--spark); animation: ping 1.8s ease-out infinite; }
+  @keyframes ping{ from{ transform:scale(1); opacity:.7 } to{ transform:scale(3); opacity:0 } }
+
+
+  .section-title{ font-size: clamp(1.75rem, 3.5vw, 2.5rem); line-height:1.1; }
+  .section-title::after{ content:""; display:block; width:2.5rem; height:3px; margin-top:.75rem; border-radius:2px; background: var(--spark); }
+
+  .xp{ border-radius: 1rem; padding: 1.25rem 1.25rem 1.25rem 2.75rem; margin-left:-.25rem;
+    border:1px solid transparent; transition: background .2s ease, border-color .2s ease, transform .2s ease; }
+  .xp:hover{ background: var(--card); border-color: var(--line); transform: translateX(4px); }
+  .xp .timeline-dot{ left: .25rem; top: 1.65rem; transition: background .2s ease, transform .2s ease; }
+  .xp:hover .timeline-dot{ background: var(--accent); transform: scale(1.2); }
+  .tag{ display:inline-block; font-size:.6875rem; letter-spacing:.08em; text-transform:uppercase; font-weight:600;
+    padding:.2rem .55rem; border-radius:999px; background: var(--accent-soft); color: var(--accent); vertical-align: middle; margin-left:.5rem; }
+  .tag.industry{ background: var(--spark-soft); color: var(--spark-ink); }
+
+  .chip{ transition: border-color .15s ease, color .15s ease, transform .15s ease; }
+  .chip:hover{ border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  .pub-card{ position:relative; overflow:hidden; transition: transform .2s ease, box-shadow .2s ease; }
+  .pub-card:hover{ transform: translateY(-3px); box-shadow: 0 14px 30px -18px var(--shadow); }
+
+  @media (prefers-reduced-motion: reduce){
+    html { scroll-behavior: auto; }
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body class="antialiased">
+<!-- ================= NAV ================= -->
+<header class="site-header fixed top-0 left-0 right-0 z-40 backdrop-blur border-b border-line">
+  <div class="relative max-w-6xl mx-auto px-5 md:px-10 h-16 flex items-center justify-between gap-4">
+    <a href="#home" class="font-display text-lg tracking-tight whitespace-nowrap">Medha Bhattacharya</a>
+    <nav id="site-nav" class="site-nav" aria-label="Pages">
+      <a href="#home" class="nav-link">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#experience" class="nav-link">Experience</a>
+      <a href="#publications" class="nav-link">Publications</a>
+      <a href="#skills" class="nav-link">Skills</a>
+      <a href="#education" class="nav-link">Education</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+    <button id="menu-btn" class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav"><span class="bars" aria-hidden="true"></span>Menu</button>
+  </div>
+</header>
+
+<main>
+<!-- ================= HOME PAGE ================= -->
+<div id="home" class="page" data-title="Home">
+<section class="hero relative overflow-hidden pt-32 pb-20 md:pt-44 md:pb-28 px-5 md:px-10">
+  <canvas id="net" class="hero-canvas" aria-hidden="true"></canvas>
+  <div class="relative max-w-6xl mx-auto">
+    <p class="eyebrow text-muted mb-5 settle">Computer Science · UC Irvine · Irvine, California</p>
+    <h1 class="font-display hero-name settle settle-2">Medha<br><em>Bhattacharya</em></h1>
+    <div class="settle settle-3">
+      <p class="mt-10 text-lg md:text-xl text-muted max-w-2xl leading-relaxed">
+        I'm a computer science researcher and engineer studying how developers and coding agents actually work together — and building the pipelines, models, and tools that come from it.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center gap-3">
+        <a href="#contact" class="px-6 py-3 rounded-full btn-primary text-sm font-medium">Get in touch</a>
+        <a href="https://github.com/medhab123" target="_blank" rel="noopener" class="px-6 py-3 rounded-full btn-secondary text-sm font-medium">GitHub</a>
+        <a href="https://linkedin.com/in/medha-bhattacharya-63a69220a" target="_blank" rel="noopener" class="px-6 py-3 rounded-full btn-secondary text-sm font-medium">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="py-16 md:py-20 px-5 md:px-10">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="font-display section-title">Explore</h2>
+    <div class="explore-grid mt-10">
+      <a href="#about" class="explore-card">
+        <span class="explore-kicker">Who I am</span>
+        <span class="explore-title font-display">About</span>
+        <span class="explore-blurb">ML, developer tooling, and applied statistics, with rigor over hype.</span>
+        <span class="explore-arrow" aria-hidden="true">→</span>
+      </a>
+      <a href="#experience" class="explore-card">
+        <span class="explore-kicker">6 roles</span>
+        <span class="explore-title font-display">Experience</span>
+        <span class="explore-blurb">Coding‑agent research, EmbedUR, Rhombus Power, and an NVIDIA hackathon.</span>
+        <span class="explore-arrow" aria-hidden="true">→</span>
+      </a>
+      <a href="#publications" class="explore-card">
+        <span class="explore-kicker">Peer‑reviewed</span>
+        <span class="explore-title font-display">Publications</span>
+        <span class="explore-blurb">A global network analysis of COVID‑19 vaccine distribution.</span>
+        <span class="explore-arrow" aria-hidden="true">→</span>
+      </a>
+      <a href="#skills" class="explore-card">
+        <span class="explore-kicker">Toolkit</span>
+        <span class="explore-title font-display">Skills</span>
+        <span class="explore-blurb">Python, PyTorch, FastAPI, SQL, Docker, and the ways I work.</span>
+        <span class="explore-arrow" aria-hidden="true">→</span>
+      </a>
+      <a href="#education" class="explore-card">
+        <span class="explore-kicker">UC Irvine · 2027</span>
+        <span class="explore-title font-display">Education</span>
+        <span class="explore-blurb">B.S. Computer Science, coursework, certifications, and awards.</span>
+        <span class="explore-arrow" aria-hidden="true">→</span>
+      </a>
+      <a href="#contact" class="explore-card explore-card-accent">
+        <span class="explore-kicker">Say hello</span>
+        <span class="explore-title font-display">Contact</span>
+        <span class="explore-blurb">Open to research collaborations and engineering roles.</span>
+        <span class="explore-arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" data-title="About" hidden class="page page-sub py-20 md:py-24 px-5 md:px-10">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-[200px_1fr] gap-8 md:gap-16">
+    <h2 class="font-display section-title">About</h2>
+    <div class="max-w-2xl space-y-6 text-lg leading-relaxed">
+      <p>
+        I'm a Computer Science undergraduate at UC Irvine (Class of 2027), on the Dean's Honor List every quarter, with a cumulative GPA of 3.76. My work sits at the intersection of machine learning, developer tooling, and applied statistics — I like problems where the right evaluation methodology matters as much as the model itself.
+      </p>
+      <p>
+        Most recently, my independent research has focused on predicting how coding agents behave from real developer–AI interaction histories, and on stress‑testing the security of agentic coding systems under adversarial prompts. Earlier work took me through epidemiological modeling, GPU‑accelerated multi‑omics pipelines, and production software at two Bay Area engineering teams.
+      </p>
+      <p class="text-muted">
+        I care about rigor over hype: repository‑held‑out evaluation splits, honest metrics under class imbalance, and reusable abstractions instead of one‑off scripts.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience" data-title="Experience" hidden class="page page-sub py-20 md:py-24 px-5 md:px-10">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-[200px_1fr] gap-8 md:gap-16">
+    <div>
+      <h2 class="font-display section-title">Experience</h2>
+      <p class="text-sm text-muted mt-3 max-w-[180px]">Research and industry, most recent first.</p>
+    </div>
+
+    <div class="relative max-w-3xl">
+      <div class="absolute left-[7px] top-8 bottom-8 w-px timeline-rail"></div>
+
+      <div class="xp relative mb-6">
+        <span class="absolute w-3.5 h-3.5 rounded-full timeline-dot"></span>
+        <p class="text-sm text-muted mb-1 tabular">2026 — Present<span class="tag">research</span></p>
+        <h3 class="font-display text-xl">Predicting Coding Agent Behavior from Developer–AI Interaction Histories</h3>
+        <p class="text-sm text-muted mt-1">Independent Research · Remote</p>
+        <ul class="mt-4 space-y-2 text-[15px] leading-relaxed list-disc list-outside pl-5 marker:text-muted">
+          <li>Formulated next‑action prediction as a 6‑class classification problem over 8,404 developer–agent turns spanning 3,191 session logs and 251 public GitHub repositories.</li>
+          <li>Designed a 5‑fold, repository‑held‑out cross‑validation protocol (0 shared repos between train/test) to isolate genuine generalization from spurious repo‑specific vocabulary.</li>
+          <li>Achieved 0.364 Macro‑F1 with multi‑turn context vs. 0.341 prompt‑only and 0.320 for a keyword‑rule baseline, a gain positive across all 5 folds (paired t‑test, p = 0.0005).</li>
+          <li>Diagnosed accuracy as misleading under class imbalance and standardized on Macro‑F1 for honest cross‑class evaluation.</li>
+          <li>Manuscript in preparation for MSR 2027 and FORGE 2027.</li>
+        </ul>
+      </div>
+
+      <div class="xp relative mb-6">
+        <span class="absolute w-3.5 h-3.5 rounded-full timeline-dot"></span>
+        <p class="text-sm text-muted mb-1 tabular">2026 — Present<span class="tag">research</span></p>
+        <h3 class="font-display text-xl">Security Vulnerability Analysis of Agentic Coding Systems</h3>
+        <p class="text-sm text-muted mt-1">Independent Research, using the WebBench framework · Remote</p>
+        <ul class="mt-4 space-y-2 text-[15px] leading-relaxed list-disc list-outside pl-5 marker:text-muted">
+          <li>Investigating adversarial robustness of AI coding agents — testing whether crafted prompts and manipulated context induce vulnerable code generation.</li>
+          <li>Designed attack scenarios and evaluation criteria spanning implementation, debugging, and tool‑use action types.</li>
+          <li>Manuscript in preparation for a peer‑reviewed venue.</li>
+        </ul>
+      </div>
+
+      <div class="xp relative mb-6">
+        <span class="absolute w-3.5 h-3.5 rounded-full timeline-dot"></span>
+        <p class="text-sm text-muted mb-1 tabular">Sep 2025 — Dec 2025<span class="tag industry">industry</span></p>
+        <h3 class="font-display text-xl">EmbedUR Systems</h3>
+        <p class="text-sm text-muted mt-1">Software Engineering Intern · San Ramon, CA (Remote)</p>
+        <ul class="mt-4 space-y-2 text-[15px] leading-relaxed list-disc list-outside pl-5 marker:text-muted">
+          <li>Designed end‑to‑end Python pipelines for sensor data classification and anomaly detection, favoring reusable abstractions over one‑off scripts.</li>
+          <li>Built a modular experimentation framework for model selection and hyperparameter search, enabling controlled ablations and reducing run‑to‑run variance.</li>
+          <li>Built preprocessing and feature extraction workflows to standardize noisy sensor inputs.</li>
+        </ul>
+      </div>
+
+      <div class="xp relative mb-6">
+        <span class="absolute w-3.5 h-3.5 rounded-full timeline-dot"></span>
+        <p class="text-sm text-muted mb-1 tabular">Sep 2025<span class="tag">hackathon</span></p>
+        <h3 class="font-display text-xl">MitoOmics‑GPU: GPU‑Accelerated Multi‑Omics Pipeline</h3>
+        <p class="text-sm text-muted mt-1">Software Developer, NVIDIA scverse Multiomics Hackathon · Remote</p>
+        <ul class="mt-4 space-y-2 text-[15px] leading-relaxed list-disc list-outside pl-5 marker:text-muted">
+          <li>Collaborated with PhD scientists to build GPU‑accelerated multi‑omics pipelines with automated, reproducible workflows.</li>
+          <li>Presented this work at ISMB 2026.</li>
+        </ul>
+      </div>
+
+      <div class="xp relative mb-6">
+        <span class="absolute w-3.5 h-3.5 rounded-full timeline-dot"></span>
+        <p class="text-sm text-muted mb-1 tabular">Jun 2025 — Sep 2025<span class="tag industry">industry</span></p>
+        <h3 class="font-display text-xl">Rhombus Power, Inc.</h3>
+        <p class="text-sm text-muted mt-1">Software Engineering Intern · Palo Alto, CA</p>
+        <ul class="mt-4 space-y-2 text-[15px] leading-relaxed list-disc list-outside pl-5 marker:text-muted">
+          <li>Instrumented model drift and consistency monitoring for a production validation pipeline, defining statistical thresholds for distributional shift.</li>
+          <li>Built a full‑stack wildfire detection system with a FastAPI backend, spanning data ingestion, model serving, and alerting.</li>
+          <li>Applied SQL for data analysis and debugging across pipeline outputs.</li>
+        </ul>
+      </div>
+
+      <div class="xp relative">
+        <span class="absolute w-3.5 h-3.5 rounded-full timeline-dot"></span>
+        <p class="text-sm text-muted mb-1 tabular">Jun 2024 — Sep 2024<span class="tag">research</span></p>
+        <h3 class="font-display text-xl">Modeling Disease Spread on Small‑World Networks via SIR Dynamics</h3>
+        <p class="text-sm text-muted mt-1">SIR Model Developer, University of North Texas · Remote</p>
+        <ul class="mt-4 space-y-2 text-[15px] leading-relaxed list-disc list-outside pl-5 marker:text-muted">
+          <li>Engineered epidemic simulations in Python with NetworkX, SciPy (odeint), and Matplotlib over graph‑structured populations.</li>
+          <li>Analyzed infection rate, rewiring probability, and node degree as parameters of a dynamical system.</li>
+          <li>Ran sensitivity analyses on network topology's role in epidemic escalation and containment.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PUBLICATIONS ================= -->
+<section id="publications" data-title="Publications" hidden class="page page-sub py-20 px-5 md:px-10">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-[200px_1fr] gap-8 md:gap-16">
+    <h2 class="font-display section-title">Publications</h2>
+    <div class="pub-card max-w-2xl bg-card border border-line rounded-2xl p-6 text-[15px] leading-relaxed">
+      <p><strong class="font-semibold">Bhattacharya, M.</strong>; Bodapati, P.; Zhang, E.; Padmanabhan, S.; Das, A.; Jahanikia, S.</p>
+      <p class="italic mt-1">"A Global Network Analysis of COVID‑19 Vaccine Distribution to Predict Breakthrough Cases among the Vaccinated Population."</p>
+      <p class="text-muted mt-2"><em>COVID</em>, 2024, 4(10), 1546–1560.</p>
+      <a href="https://doi.org/10.3390/covid4100107" target="_blank" rel="noopener" class="accent text-sm mt-2 inline-block hover:underline break-all">doi.org/10.3390/covid4100107</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills" data-title="Skills" hidden class="page page-sub py-20 md:py-24 px-5 md:px-10">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-[200px_1fr] gap-8 md:gap-16">
+    <h2 class="font-display section-title">Skills</h2>
+    <div class="max-w-3xl space-y-10">
+      <div>
+        <p class="text-sm text-muted mb-3">Languages</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip px-3 py-1.5 rounded-full text-sm">Python</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">C / C++</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">Java</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">JavaScript</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">TypeScript</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">SQL</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">NoSQL</span>
+        </div>
+      </div>
+      <div>
+        <p class="text-sm text-muted mb-3">Frameworks &amp; libraries</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip px-3 py-1.5 rounded-full text-sm">PyTorch</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">scikit‑learn</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">NetworkX</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">SciPy</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">FastAPI</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">Node.js</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">REST APIs</span>
+        </div>
+      </div>
+      <div>
+        <p class="text-sm text-muted mb-3">Platforms &amp; tools</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip px-3 py-1.5 rounded-full text-sm">Linux</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">Git / GitHub</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">Jupyter</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">PostgreSQL</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">MySQL</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">Docker</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">Airflow</span>
+        </div>
+      </div>
+      <div>
+        <p class="text-sm text-muted mb-3">Ways of working</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip px-3 py-1.5 rounded-full text-sm">Algorithm design</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">Statistical modeling</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">Distributed pipelines</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">Adversarial &amp; security evaluation</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">Ambiguous‑problem solving</span>
+          <span class="chip px-3 py-1.5 rounded-full text-sm">Cross‑functional collaboration</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EDUCATION ================= -->
+<section id="education" data-title="Education" hidden class="page page-sub py-20 md:py-24 px-5 md:px-10">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-[200px_1fr] gap-8 md:gap-16">
+    <h2 class="font-display section-title">Education</h2>
+    <div class="max-w-2xl">
+      <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
+        <h3 class="font-display text-xl">University of California, Irvine</h3>
+        <p class="text-sm text-muted">Expected June 2027</p>
+      </div>
+      <p class="text-[15px]">Bachelor of Science in Computer Science</p>
+      <p class="text-sm text-muted mt-1">Cumulative GPA: 3.76 · Dean's Honor List, all quarters</p>
+
+      <p class="text-sm text-muted mt-6 mb-2">Relevant coursework</p>
+      <p class="text-[15px] leading-relaxed">Machine Learning / Data Mining, Design &amp; Analysis of Algorithms, Discrete Math &amp; Probability Theory, Scientific Computing (graduate level), Linear Algebra, Multivariable Calculus, Data Structures Implementation &amp; Analysis, Software Engineering.</p>
+
+      <div class="grid sm:grid-cols-2 gap-8 mt-8 pt-8 border-t border-line">
+        <div>
+          <p class="text-sm text-muted mb-2">Certifications</p>
+          <ul class="text-[15px] leading-relaxed space-y-1">
+            <li>Deep Learning Specialization — Coursera (Andrew Ng)</li>
+            <li>IBM Data Engineering Professional Certification</li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-sm text-muted mb-2">Awards</p>
+          <ul class="text-[15px] leading-relaxed space-y-1">
+            <li>CareTech AI in Healthcare Hackathon — 2nd Place (Best UI/UX)</li>
+            <li>NCWIT Affiliate Award Winner, 2022</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" data-title="Contact" hidden class="page page-sub py-20 md:py-24 px-5 md:px-10">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-[200px_1fr] gap-8 md:gap-16">
+    <div>
+      <h2 class="font-display section-title">Contact</h2>
+      <p class="text-sm text-muted mt-3 max-w-[180px]">Open to research collaborations and engineering roles.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-12 max-w-4xl">
+      <div class="space-y-5">
+        <div>
+          <p class="text-sm text-muted mb-1">Email</p>
+          <a href="mailto:mbhatta1@uci.edu" class="text-lg font-display hover:underline">mbhatta1@uci.edu</a>
+        </div>
+        <div>
+          <p class="text-sm text-muted mb-1">LinkedIn</p>
+          <a href="https://linkedin.com/in/medha-bhattacharya-63a69220a" target="_blank" rel="noopener" class="text-lg font-display hover:underline break-all">linkedin.com/in/medha-bhattacharya</a>
+        </div>
+        <div>
+          <p class="text-sm text-muted mb-1">GitHub</p>
+          <a href="https://github.com/medhab123" target="_blank" rel="noopener" class="text-lg font-display hover:underline break-all">github.com/medhab123</a>
+        </div>
+      </div>
+
+      <form id="contact-form" class="space-y-4">
+        <div>
+          <label for="name" class="text-sm text-muted block mb-1.5">Name</label>
+          <input id="name" name="name" type="text" required placeholder="Your name" class="field w-full rounded-lg px-4 py-2.5 text-[15px]" />
+        </div>
+        <div>
+          <label for="email" class="text-sm text-muted block mb-1.5">Email</label>
+          <input id="email" name="email" type="email" required placeholder="you@example.com" class="field w-full rounded-lg px-4 py-2.5 text-[15px]" />
+        </div>
+        <div>
+          <label for="message" class="text-sm text-muted block mb-1.5">Message</label>
+          <textarea id="message" name="message" required rows="4" placeholder="What would you like to talk about?" class="field w-full rounded-lg px-4 py-2.5 text-[15px] resize-none"></textarea>
+        </div>
+        <button type="submit" class="btn-primary px-6 py-3 rounded-full text-sm font-medium">Open in email</button>
+        <p id="form-status" class="text-sm text-muted" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="px-5 md:px-10 py-10 text-sm text-muted border-t border-line">
+  <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between gap-2">
+    <p>© 2026 Medha Bhattacharya</p>
+    <p>Irvine, California</p>
+  </div>
+</footer>
+
+<script>
+  // Hero: a drifting interaction graph — nodes link when close, a few "agent" nodes glow.
+  (function () {
+    var canvas = document.getElementById('net');
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var nodes = [], W = 0, H = 0, dpr = 1, colors = {}, frame = 0;
+
+    function readColors() {
+      var s = getComputedStyle(document.documentElement);
+      colors.accent = s.getPropertyValue('--accent').trim() || '#3046D1';
+      colors.spark = s.getPropertyValue('--spark').trim() || '#E2466E';
+    }
+    function resize() {
+      var r = canvas.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = r.width; H = r.height;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var count = Math.round(Math.min(70, Math.max(26, W * H / 16000)));
+      nodes = [];
+      for (var i = 0; i < count; i++) {
+        nodes.push({
+          x: W * (0.3 + Math.random() * 0.7), y: Math.random() * H,
+          vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
+          r: 1.6 + Math.random() * 2.2, agent: Math.random() < 0.14
+        });
+      }
+    }
+    function draw() {
+      // Skip the work while the home page is hidden; keep the loop alive.
+      if (!canvas.offsetParent) { if (!reduce) requestAnimationFrame(draw); return; }
+      if (frame++ % 90 === 0) readColors();
+      ctx.clearRect(0, 0, W, H);
+      var link = Math.min(150, W / 6);
+      for (var i = 0; i < nodes.length; i++) {
+        var a = nodes[i];
+        if (!reduce) {
+          a.x += a.vx; a.y += a.vy;
+          if (a.x < W * 0.2 || a.x > W) a.vx *= -1;
+          if (a.y < 0 || a.y > H) a.vy *= -1;
+        }
+        for (var j = i + 1; j < nodes.length; j++) {
+          var b = nodes[j], dx = a.x - b.x, dy = a.y - b.y, d = Math.sqrt(dx * dx + dy * dy);
+          if (d < link) {
+            ctx.globalAlpha = (1 - d / link) * 0.45;
+            ctx.strokeStyle = (a.agent || b.agent) ? colors.spark : colors.accent;
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          }
+        }
+      }
+      for (var k = 0; k < nodes.length; k++) {
+        var n = nodes[k];
+        ctx.globalAlpha = n.agent ? 0.95 : 0.7;
+        ctx.fillStyle = n.agent ? colors.spark : colors.accent;
+        ctx.beginPath(); ctx.arc(n.x, n.y, n.agent ? n.r + 1.5 : n.r, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      if (!reduce) requestAnimationFrame(draw);
+    }
+    readColors(); resize(); draw();
+    function refit() { resize(); if (reduce) draw(); }
+    var t; window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(refit, 150); });
+    window.addEventListener('pageshown', function (e) { if (e.detail === 'home') refit(); });
+  })();
+
+  // Pages: one section visible at a time, chosen by the URL hash (#about, #experience, …).
+  (function () {
+    var pages = Array.prototype.slice.call(document.querySelectorAll('main > .page'));
+    var ids = pages.map(function (p) { return p.id; });
+    var links = document.querySelectorAll('.nav-link');
+
+    // Previous / next links at the bottom of each inner page.
+    pages.forEach(function (p, i) {
+      if (p.id === 'home') return;
+      var wrap = p.querySelector(':scope > div');
+      var prev = pages[i - 1], next = pages[i + 1];
+      var bar = document.createElement('div');
+      bar.className = 'page-next';
+      bar.innerHTML =
+        (prev ? '<a href="#' + prev.id + '"><small>← Previous</small><span>' + prev.dataset.title + '</span></a>' : '') +
+        (next ? '<a class="next" href="#' + next.id + '"><small>Next →</small><span>' + next.dataset.title + '</span></a>'
+              : '<a class="next" href="#home"><small>Back to →</small><span>Home</span></a>');
+      bar.style.gridColumn = '1 / -1';
+      wrap.appendChild(bar);
+    });
+
+    function show() {
+      var id = (location.hash || '').replace(/^#\/?/, '');
+      if (id === 'top' || ids.indexOf(id) === -1) id = 'home';
+      pages.forEach(function (p) { p.hidden = p.id !== id; });
+      links.forEach(function (a) {
+        var on = a.getAttribute('href') === '#' + id;
+        a.classList.toggle('active', on);
+        if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+      });
+      var page = document.getElementById(id);
+      document.title = id === 'home' ? 'Medha Bhattacharya' : page.dataset.title + ' · Medha Bhattacharya';
+      window.scrollTo(0, 0);
+      window.dispatchEvent(new CustomEvent('pageshown', { detail: id }));
+    }
+    var nav = document.getElementById('site-nav'), btn = document.getElementById('menu-btn');
+    function setMenu(open) { nav.classList.toggle('open', open); btn.setAttribute('aria-expanded', String(open)); }
+    btn.addEventListener('click', function () { setMenu(!nav.classList.contains('open')); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+    window.addEventListener('hashchange', function () { setMenu(false); show(); });
+    show();
+  })();
+
+  // No backend: build a mailto link with the message pre-filled.
+  document.getElementById('contact-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('name').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var message = document.getElementById('message').value.trim();
+    var subject = encodeURIComponent('Website message from ' + name);
+    var body = encodeURIComponent(message + '\n\n— ' + name + ' (' + email + ')');
+    var status = document.getElementById('form-status');
+    try {
+      window.open('mailto:mbhatta1@uci.edu?subject=' + subject + '&body=' + body, '_blank');
+      status.textContent = 'Opening your email app. If nothing opens, email mbhatta1@uci.edu directly.';
+    } catch (err) {
+      status.textContent = 'Your browser blocked the email app. Email mbhatta1@uci.edu directly.';
+    }
+  });
+</script>
+
+</body>
+</html>
